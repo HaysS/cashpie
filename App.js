@@ -1,4 +1,8 @@
 import React from 'react';
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, combineReduxers, compose } from 'redux'
+import thunkMiddleware frmo 'redux-thunk'
+import createLogger from 'redux-logger'
 import { 
   Platform, 
   StatusBar, 
@@ -24,7 +28,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     console.log('env: ', env, ' !hasInitialized == ', !this.state.hasInitialized)
-    
+
     if(env == 'production' && !this.state.hasInitialized) {
       Expo.Amplitude.initialize(config.amplitude.apiKey) //Amplitude analytics
       Expo.Amplitude.logEvent('USER_LOGGED_IN')
