@@ -1,8 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, combineReduxers, compose } from 'redux'
-import thunkMiddleware frmo 'redux-thunk'
-import createLogger from 'redux-logger'
 import { 
   Platform, 
   StatusBar, 
@@ -15,12 +11,39 @@ import {
   InteractionManager, } from 'react-native';
 import Expo, { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, combineReduxers, compose } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import reducer from './src/reducers'
+
 
 //Sets dev or production config automatically
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config')[env];
 
-export default class App extends React.Component {
+const loggerMiddleware = createLogger({ predicate: (getState, actions) => __DEV__ })
+
+function configureStore(initialState) {
+  const enhancer = compose(
+    applyMiddleware(
+      thunkMiddleware, 
+      loggerMiddleware,
+    ),
+  )
+
+  return createStore(reducer, initialState, enhancer);
+}
+
+const store = configureStore({});
+
+const App = () => {
+  <Provider store={store}>
+    <Cashpie />
+  </Provider>
+}
+
+export default class Cashpie extends React.Component {
   state = {
     isLoadingComplete: false,
     hasInitialized: false,
