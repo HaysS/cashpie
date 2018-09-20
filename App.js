@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   NativeModules,
   InteractionManager, } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import Expo, { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
 
 //Sets dev or production config automatically
@@ -19,10 +19,12 @@ const config = require('./config')[env];
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
-    hasIntiialized: false,
+    hasInitialized: false,
   };
 
   componentDidMount() {
+    console.log('env: ', env, ' !hasInitialized == ', !this.state.hasInitialized)
+    
     if(env == 'production' && !this.state.hasInitialized) {
       Expo.Amplitude.initialize(config.amplitude.apiKey) //Amplitude analytics
       Expo.Amplitude.logEvent('USER_LOGGED_IN')
