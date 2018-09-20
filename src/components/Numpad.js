@@ -33,9 +33,9 @@ export default class Numpad extends React.Component {
 	}
 
 	clearText() {
-		// InteractionManager.runAfterInteractions(() => {
-		//   this.setState({text: ''});
-		// })
+		InteractionManager.runAfterInteractions(() => {
+		  this.setState({text: ''});
+		})
 	}
 
 	render() {
