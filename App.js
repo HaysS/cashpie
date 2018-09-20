@@ -19,7 +19,19 @@ const config = require('./config')[env];
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    hasIntiialized: false,
   };
+
+  componentDidMount() {
+    if(env == 'production' && !this.state.hasInitialized) {
+      Expo.Amplitude.initialize(config.amplitude.apiKey) //Amplitude analytics
+      Expo.Amplitude.logEvent('USER_LOGGED_IN')
+
+      InteractionManager.runAfterInteractions(() => {
+        this.setState({hasIntialized: true})
+      })
+    }
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

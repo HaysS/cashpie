@@ -20,7 +20,7 @@ const box_width = width / col_count;
 export default class Numpad extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {text: '234234'};
+		this.state = {text: '0'};
 	} 
 
 	addChar(input) {
