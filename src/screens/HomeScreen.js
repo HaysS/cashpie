@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
+import Button from '../components/Button'
 import { MonoText } from '../components/StyledText';
 
 
@@ -26,12 +27,6 @@ const { height, width } = Dimensions.get('window');
 //Relevant for grid like keypad
 const col_count = 4;
 const box_width = width / col_count;
-
-function Button(props) {
-  return(
-    <TouchableOpacity onPress={() => { props.cb() }} style={styles.box}><Text style={styles.buttonText}>{props.text}</Text></TouchableOpacity>
-  )
-}
 
 function StatusBarBackground(props) {
   return(
