@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Dimensions,
+  InteractionManager,
 } from 'react-native';
 
 import Button from './Button'
@@ -23,12 +24,12 @@ export default class Numpad extends React.Component {
 	} 
 
 	addChar(input) {
-		// console.log('input: ', input)
-		// const text = "" + this.state.text + input;
+		console.log('input: ', input)
+		const text = "" + this.state.text + input;
 
-		// InteractionManager.runAfterInteractions(() => {
-		//   this.setState({text});
-		// })
+		InteractionManager.runAfterInteractions(() => {
+		  this.setState({text});
+		})
 	}
 
 	clearText() {
