@@ -8,7 +8,6 @@ import {
   StatusBar, 
   Dimensions,
   TouchableOpacity,
-  NativeModules,
   InteractionManager,
   View,
 } from 'react-native';
@@ -16,10 +15,12 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-const { StatusBarManager } = NativeModules;
+
+// # Save code below in case encountering status bar issues later #
+// const { StatusBarManager } = NativeModules;
+// const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
 
 //Screen measurements
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
 const { height, width } = Dimensions.get('window');
  
 //Relevant for grid like keypad
@@ -45,18 +46,18 @@ class Numpad extends React.Component {
   } 
 
   addChar(input) {
-    console.log('input: ', input)
-    const text = "" + this.state.text + input;
+    // console.log('input: ', input)
+    // const text = "" + this.state.text + input;
 
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({text});
-    })
+    // InteractionManager.runAfterInteractions(() => {
+    //   this.setState({text});
+    // })
   }
 
   clearText() {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({text: ''});
-    })
+    // InteractionManager.runAfterInteractions(() => {
+    //   this.setState({text: ''});
+    // })
   }
 
   render() {
@@ -104,45 +105,8 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
+        <View style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <Numpad />
         </View>
       </View>
     );
@@ -268,5 +232,31 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+///Lines for component styling is here, remove this latere
+  topRow: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  input: {
+    fontSize: 55,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  box: {
+    borderWidth: 2,
+    flexDirection: 'column',
+    borderColor: 'black',
+    height: height,
+    width: box_width,
+    backgroundColor: '#CECCCF',
+    alignItems: "center",
+  },
+  buttonText: {
+    flex: 1,
   },
 });
