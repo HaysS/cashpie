@@ -1,20 +1,9 @@
 import React from 'react';
-import { 
-  Platform, 
-  StatusBar, 
-  StyleSheet, 
-  View, 
-  Dimensions,
-  Text,
-  TouchableOpacity,
-  NativeModules,
-  InteractionManager, } from 'react-native';
-import Expo, { AppLoading, Asset, Font, Icon } from 'expo';
-import AppNavigator from './src/navigation/AppNavigator';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReduxers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
+import * as firebase from 'firebase'
 
 import reducer from './src/reducers'
 import Main from './src/Main'
@@ -24,6 +13,16 @@ import Main from './src/Main'
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config')[env];
 
+//Firebase DB Initialization
+const firebaseConfig = {
+   apiKey: config.database.firebase.apiKey,
+   authDomain: config.database.firebase.authDomain,
+   databaseURL: config.database.firebase.databaseURL,
+ } 
+
+firebase.initializeApp(firebaseConfig)
+
+//Redux Intialization
 const loggerMiddleware = createLogger({ predicate: (getState, actions) => __DEV__ })
 
 function configureStore(initialState) {
@@ -39,6 +38,7 @@ function configureStore(initialState) {
 
 const store = configureStore({});
 
+//App class declaration
 export default class App extends React.Component {
   render() {
     return(
